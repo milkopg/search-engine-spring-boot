@@ -1,7 +1,7 @@
 package net.icdpublishing.exercise2.myapp;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import net.icdpublishing.exercise2.myapp.customers.domain.Customer;
 import net.icdpublishing.exercise2.myapp.customers.general.Constants;
 import net.icdpublishing.exercise2.myapp.customers.search.SearchForm;
+import net.icdpublishing.exercise2.myapp.customers.service.CustomerDaoService;
 import net.icdpublishing.exercise2.searchengine.domain.Record;
 import net.icdpublishing.exercise2.searchengine.requests.SimpleSurnameAndPostcodeQuery;
 import net.icdpublishing.exercise2.searchengine.services.SearchEngineRetrievalService;
@@ -20,12 +22,12 @@ import net.icdpublishing.exercise2.searchengine.services.SearchEngineRetrievalSe
 @Controller
 public class MySearchController {
 	
-	//@Autowired 
 	private SearchEngineRetrievalService retrievalService;
 	
 	@Autowired
-	CustomerDao customerDao;
+	CustomerDaoService daoService;
 	
+	//@Autowired
 	public MySearchController(SearchEngineRetrievalService retrievalService) {
 		this.retrievalService = retrievalService;
 	}
@@ -44,7 +46,6 @@ public class MySearchController {
 	}
 	
 	
-	//@RequestMapping(value = {"/" }, method = RequestMethod.GET)
 	@PostMapping("/search")
 	public String search(Model model, @ModelAttribute("searchForm") SearchForm searchForm, @RequestParam(value="name", required=false, defaultValue="World") String name) {
 		model.addAttribute("name", name);
@@ -58,9 +59,14 @@ public class MySearchController {
 		if (searchForm == null) return Constants.SCREEN_NO_DATA;
 		String surname = searchForm.getSurname();
 		String postcode = searchForm.getPostcode();
+		String email = searchForm.getEmail();
 		SimpleSurnameAndPostcodeQuery query = new SimpleSurnameAndPostcodeQuery(surname, postcode);
+		Customer customer = daoService.findCustomerByEmailAddress(email);
+		SearchRequest request = new SearchRequest(query, customer);
 		
-		Collection<Record> results = retrievalService.search(query).stream().filter(record -> record.getPerson().get)
+		Collection<Record> results = handleRequest(request).stream().
+				filter(record -> (record.getPerson().getSurname().equals(surname) && record.getPerson().getAddress().getPostcode().equals(postcode)))
+				.collect(Collectors.toList());
 		model.addAttribute("resutls", results);
 		return Constants.SCREEN_RESULTS;
 	} 
