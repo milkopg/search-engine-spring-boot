@@ -1,7 +1,6 @@
 package net.icdpublishing.exercise2.myapp;
 
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -11,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -83,7 +81,6 @@ public class MySearchController {
 		return persons;
 	}
 	
-	//@RequestMapping((value = "/getString", produces = MediaType.APPLICATION_JSON_VALUE)
 	@GetMapping(value = "/search", produces = "application/json; charset=UTF-8")
 	public @ResponseBody Collection<Record> search (@RequestParam(value="email", required=true) String email, 
 			@RequestParam(value="surname", required=true) String surname, 
