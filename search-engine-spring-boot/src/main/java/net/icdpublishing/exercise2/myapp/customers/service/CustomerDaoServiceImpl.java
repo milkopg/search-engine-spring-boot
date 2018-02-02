@@ -12,9 +12,6 @@ public class CustomerDaoServiceImpl implements CustomerDaoService {
 	@Autowired
 	private CustomerDao customerDao;
 	
-//	@Autowired
-//	private SearchEngineRetrievalService searchEngine;
-	
 	@Override
 	public Customer findCustomerByEmailAddress(String email) {
 		return customerDao.findCustomerByEmailAddress(email);
