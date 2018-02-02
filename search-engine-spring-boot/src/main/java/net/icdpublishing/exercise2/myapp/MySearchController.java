@@ -27,7 +27,7 @@ public class MySearchController {
 	@Autowired
 	CustomerDaoService daoService;
 	
-	//@Autowired
+	@Autowired
 	public MySearchController(SearchEngineRetrievalService retrievalService) {
 		this.retrievalService = retrievalService;
 	}
