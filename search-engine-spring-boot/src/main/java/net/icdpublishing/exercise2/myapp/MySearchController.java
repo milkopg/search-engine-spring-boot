@@ -69,8 +69,9 @@ public class MySearchController {
 		Collection<Record> persons = handleRequest(request);/*.stream().
 				filter(record -> (record.getPerson().getSurname().equals(surname) && record.getPerson().getAddress().getPostcode().equals(postcode)))
 				.collect(Collectors.toList());*/
+		model.addAttribute("customer", customer);
 		model.addAttribute("persons", persons);
-		ModelAndView modelAndView = new ModelAndView(Constants.SCREEN_RESULTS, "persons", persons);
+		ModelAndView modelAndView = new ModelAndView(Constants.SCREEN_RESULTS, model.asMap());
 		return modelAndView;
 	} 
 	

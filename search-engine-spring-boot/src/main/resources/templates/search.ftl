@@ -23,9 +23,9 @@
             
             <form name="search" action="search" method="POST">
            
-               Email: <@spring.formInput "searchForm.email" "" "text"/>    <br/>
-               Surname: <@spring.formInput "searchForm.surname" "" "text"/>    <br/>
-			   Postcode: <@spring.formInput "searchForm.postcode" "" "text"/>    <br/>
+               <@spring.message "input.email"/><@spring.formInput "searchForm.email" "" "text"/>    <br/>
+               <@spring.message "input.surname"/><@spring.formInput "searchForm.surname" "" "text"/>    <br/>
+			   <@spring.message "input.postcode"/><@spring.formInput "searchForm.postcode" "" "text"/>    <br/>
                <input type="submit" value="Search" />
             </form>
          </fieldset>
