@@ -2,10 +2,8 @@
 <html>
 <head>
   <link rel="stylesheet" type="text/css" href="<@spring.url '/css/style.css'/>"/>
-<title>Hello ${name}!</title>
 </head>
 <body>
-	  <h2 class="hello-title">Hello ${name}!</h2>
     <table>
     	<tr>
     		<td><label><spring:message code="input.email"></spring:message></label></td>

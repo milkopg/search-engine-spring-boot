@@ -43,15 +43,13 @@ public class MySearchController {
 	@GetMapping("/")
 	public String home(Model model) {
 		SearchForm searchForm = new SearchForm();
-		model.addAttribute("name", "");
 		model.addAttribute("searchForm", searchForm);
 		return Constants.SCREEN_SEARCH;
 	}
 	
 	
 	@PostMapping("/search")
-	public ModelAndView search(Model model, @ModelAttribute("searchForm") SearchForm searchForm, @RequestParam(value="name", required=false, defaultValue="World") String name) {
-		model.addAttribute("name", name);
+	public ModelAndView search(Model model, @ModelAttribute("searchForm") SearchForm searchForm) {
 		model.addAttribute("searchForm", searchForm);
 		return showResults(model, searchForm);
 	}

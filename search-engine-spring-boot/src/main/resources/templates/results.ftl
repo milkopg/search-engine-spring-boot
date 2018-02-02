@@ -3,12 +3,8 @@
 <html>
 <head>
 
-<title>Hello ${name}!</title>
 </head>
 <body>
-	  <h2 class="hello-title">Hello ${name}!</h2>
-   
-
 	 <div>
          <fieldset>
             <legend><@spring.message "legend.search"/></legend>
