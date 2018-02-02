@@ -27,8 +27,8 @@
 	            </tr>
 	            <#list persons as person>
 	            <tr>
-	               <td>${person.firstName}</td>
-	               <td>${person.lastName}</td>
+	               <td>${person.person.forename}</td>
+	               <td>${person.person.surname}</td>
 	            </tr>
 	            </#list>
 	         </table>

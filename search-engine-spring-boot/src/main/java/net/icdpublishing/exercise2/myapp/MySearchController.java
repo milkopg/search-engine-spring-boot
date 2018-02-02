@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import net.icdpublishing.exercise2.myapp.customers.domain.Customer;
 import net.icdpublishing.exercise2.myapp.customers.general.Constants;
@@ -32,10 +34,6 @@ public class MySearchController {
 		this.retrievalService = retrievalService;
 	}
 	
-	public MySearchController() {
-		// TODO Auto-generated constructor stub
-	}
-	
 	public Collection<Record> handleRequest(SearchRequest request) {
 		Collection<Record> resultSet = getResults(request.getQuery());
 		return resultSet;
@@ -51,7 +49,7 @@ public class MySearchController {
 	
 	
 	@PostMapping("/search")
-	public String search(Model model, @ModelAttribute("searchForm") SearchForm searchForm, @RequestParam(value="name", required=false, defaultValue="World") String name) {
+	public ModelAndView search(Model model, @ModelAttribute("searchForm") SearchForm searchForm, @RequestParam(value="name", required=false, defaultValue="World") String name) {
 		model.addAttribute("name", name);
 		model.addAttribute("searchForm", searchForm);
 		return showResults(model, searchForm);
@@ -59,8 +57,8 @@ public class MySearchController {
 	
 	
 	@PostMapping("/results")
-	public String showResults(Model model, SearchForm searchForm) {
-		if (searchForm == null) return Constants.SCREEN_NO_DATA;
+	public ModelAndView showResults(Model model, SearchForm searchForm) {
+		if (searchForm == null) return null;
 		String surname = searchForm.getSurname();
 		String postcode = searchForm.getPostcode();
 		String email = searchForm.getEmail();
@@ -68,12 +66,17 @@ public class MySearchController {
 		Customer customer = daoService.findCustomerByEmailAddress(email);
 		SearchRequest request = new SearchRequest(query, customer);
 		
-		Collection<Record> results = handleRequest(request).stream().
+		Collection<Record> persons = handleRequest(request);/*.stream().
 				filter(record -> (record.getPerson().getSurname().equals(surname) && record.getPerson().getAddress().getPostcode().equals(postcode)))
-				.collect(Collectors.toList());
-		model.addAttribute("resutls", results);
-		return Constants.SCREEN_RESULTS;
+				.collect(Collectors.toList());*/
+		model.addAttribute("persons", persons);
+		ModelAndView modelAndView = new ModelAndView(Constants.SCREEN_RESULTS, "persons", persons);
+		return modelAndView;
 	} 
+	
+//	@GetMapping("displayResults")
+//	public @ResponseBody Collection<Record> 
+//	
 	
 	private Collection<Record> getResults(SimpleSurnameAndPostcodeQuery query) {
 		return retrievalService.search(query);

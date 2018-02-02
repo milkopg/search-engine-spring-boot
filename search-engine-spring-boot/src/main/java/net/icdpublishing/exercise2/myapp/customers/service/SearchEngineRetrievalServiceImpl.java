@@ -11,10 +11,9 @@ import net.icdpublishing.exercise2.searchengine.services.SearchEngineRetrievalSe
 
 @Service
 public class SearchEngineRetrievalServiceImpl implements SearchEngineRetrievalService {
-	
 	@Override
 	public Collection<Record> search(SimpleSurnameAndPostcodeQuery query) {
-		DataLoader dataLoader = new DataLoader();
-		return dataLoader.loadAllDatasets();
+		DataLoader loader = new DataLoader();
+		return loader.loadAllDatasets();
 	}
 }
