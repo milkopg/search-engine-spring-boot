@@ -3,12 +3,15 @@ package net.icdpublishing.exercise2.myapp;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -57,27 +60,39 @@ public class MySearchController {
 	
 	
 	@PostMapping("/results")
-	public ModelAndView showResults(Model model, SearchForm searchForm) {
-		if (searchForm == null) return null;
+	public ModelAndView showResults(Model model, @Valid SearchForm searchForm) {
 		String surname = searchForm.getSurname();
 		String postcode = searchForm.getPostcode();
 		String email = searchForm.getEmail();
-		SimpleSurnameAndPostcodeQuery query = new SimpleSurnameAndPostcodeQuery(surname, postcode);
-		Customer customer = daoService.findCustomerByEmailAddress(email);
-		SearchRequest request = new SearchRequest(query, customer);
 		
-		Collection<Record> persons = handleRequest(request);/*.stream().
-				filter(record -> (record.getPerson().getSurname().equals(surname) && record.getPerson().getAddress().getPostcode().equals(postcode)))
-				.collect(Collectors.toList());*/
+		Collection<Record> persons = performSearch(surname, postcode, email);
+		
+		Customer customer = daoService.findCustomerByEmailAddress(email);
 		model.addAttribute("customer", customer);
 		model.addAttribute("persons", persons);
 		ModelAndView modelAndView = new ModelAndView(Constants.SCREEN_RESULTS, model.asMap());
 		return modelAndView;
-	} 
+	}
 	
-//	@GetMapping("displayResults")
-//	public @ResponseBody Collection<Record> 
-//	
+	private Collection<Record> performSearch(String surname, String postcode, String email) {
+		SimpleSurnameAndPostcodeQuery query = new SimpleSurnameAndPostcodeQuery(surname, postcode);
+		Customer customer = daoService.findCustomerByEmailAddress(email);
+		SearchRequest request = new SearchRequest(query, customer);
+		
+		Collection<Record> persons = handleRequest(request);
+		return persons;
+	}
+	
+	//@RequestMapping((value = "/getString", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/search", produces = "application/json; charset=UTF-8")
+	public @ResponseBody Collection<Record> search (@RequestParam(value="email", required=true) String email, 
+			@RequestParam(value="surname", required=true) String surname, 
+			@RequestParam(value="postcode", required=true) String postcode) {
+		Collection<Record> persons = performSearch(surname, postcode, email);
+		return persons;
+		
+	}
+	
 	
 	private Collection<Record> getResults(SimpleSurnameAndPostcodeQuery query) {
 		return retrievalService.search(query);
