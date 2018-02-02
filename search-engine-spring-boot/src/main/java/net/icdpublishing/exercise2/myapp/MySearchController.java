@@ -32,6 +32,10 @@ public class MySearchController {
 		this.retrievalService = retrievalService;
 	}
 	
+	public MySearchController() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public Collection<Record> handleRequest(SearchRequest request) {
 		Collection<Record> resultSet = getResults(request.getQuery());
 		return resultSet;
