@@ -35,7 +35,7 @@ public class CustomSearchEngineRetrievalServiceImpl implements CustomSearchEngin
 		DataLoader loader = new DataLoader();
 		Collection<Record> records = loader.loadAllDatasets()
 				.stream().filter( rec -> (rec.getPerson().getSurname().startsWith(surname) && rec.getPerson().getAddress().getPostcode().startsWith(postCode)
-						|| ("".equals(surname) && "".equals(surname)))) //TODO to remove it
+						/*|| ("".equals(surname) && "".equals(surname))*/)) //TODO to remove it
 				.collect(Collectors.toList());
 		return sortRecords(records);
 	}
