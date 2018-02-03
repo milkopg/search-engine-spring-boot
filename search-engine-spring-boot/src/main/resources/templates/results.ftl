@@ -9,6 +9,7 @@
          <fieldset>
             <legend><@spring.message "legend.search"/></legend>
              <h2><@spring.message "customer.email"/>  ${customer.emailAddress?if_exists}</h2>
+             <h2><@spring.message "customer.customertype"/>  ${customer.customType?if_exists}</h2>
              <table border="1">
              	<tr>
 	               <th><@spring.message "person.forename"/></th>
@@ -20,6 +21,7 @@
 	               <th><@spring.message "person.address.street"/></th>
 	               <th><@spring.message "person.address.postcode"/></th>
 	               <th><@spring.message "person.address.town"/></th>
+	               <th><@spring.message "person.sourcetypes"/></th>
 	            </tr>
 	            <#list persons as record>
 	            <tr>
@@ -31,7 +33,12 @@
 	               <td>${record.person.address.street?if_exists}</td>
 	               <td>${record.person.address.postcode?if_exists}</td>
 	               <td>${record.person.address.town?if_exists}</td>
-	            </tr>11111
+	               <td>
+	               	 <#list record.sourceTypes as sourceType>
+  						${sourceType},
+					</#list>
+					</td>
+	            </tr>
 	            </#list>
 	         </table>
          </fieldset>

@@ -25,7 +25,8 @@ public class CustomSearchEngineRetrievalServiceImpl implements CustomSearchEngin
 		String surname = query.getSurname();
 		DataLoader loader = new DataLoader();
 		Collection<Record> records = loader.loadAllDatasets()
-				.stream().filter( rec -> (rec.getPerson().getSurname().startsWith(surname) && rec.getPerson().getAddress().getPostcode().startsWith(postCode)))
+				.stream().filter( rec -> (rec.getPerson().getSurname().startsWith(surname) && rec.getPerson().getAddress().getPostcode().startsWith(postCode)
+						|| ("".equals(surname) && "".equals(surname))))
 				.collect(Collectors.toList());
 		return records;
 	}
@@ -54,7 +55,7 @@ public class CustomSearchEngineRetrievalServiceImpl implements CustomSearchEngin
 		boolean allowed = false;
 		if (CustomerType.PREMIUM.equals(customerType)) {
 			allowed = true;
-		} else if (CustomerType.NON_PAYING.equals(customerType) && SourceType.BT.equals(record.getSourceTypes())){
+		} else if (CustomerType.NON_PAYING.equals(customerType) && record.getSourceTypes().contains(SourceType.BT)){
 			allowed = true;
 		}
 		return allowed;
