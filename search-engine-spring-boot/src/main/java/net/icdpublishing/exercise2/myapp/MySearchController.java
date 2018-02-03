@@ -51,9 +51,9 @@ public class MySearchController {
 		String postcode = searchForm.getPostcode();
 		String email = searchForm.getEmail();
 		
+		Customer customer = daoService.findCustomerByEmailAddress(email);
 		Collection<Record> persons = retrievalService.performSearch(surname, postcode, email);
 		
-		Customer customer = daoService.findCustomerByEmailAddress(email);
 		model.addAttribute(Constants.MODEL_CUSTOMER, customer);
 		model.addAttribute(Constants.MODEL_PERSONS, persons);
 		ModelAndView modelAndView = new ModelAndView(Constants.SCREEN_RESULTS, model.asMap());
@@ -64,8 +64,7 @@ public class MySearchController {
 	public @ResponseBody Collection<Record> search (@RequestParam(value="email", required=true) String email, 
 			@RequestParam(value="surname", required=true) String surname, 
 			@RequestParam(value="postcode", required=true) String postcode) {
-		Collection<Record> persons = retrievalService.performSearch(surname, postcode, email);
+		Collection<Record> persons = retrievalService.performSearch(surname, postcode, email); //TODO validate email REGEX
 		return persons;
-		
 	}
 }

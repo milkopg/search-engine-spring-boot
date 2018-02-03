@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import net.icdpublishing.exercise2.myapp.SearchRequest;
+import net.icdpublishing.exercise2.myapp.charging.dao.ChargingDao;
+import net.icdpublishing.exercise2.myapp.charging.services.ChargingService;
 import net.icdpublishing.exercise2.myapp.customers.domain.Customer;
 import net.icdpublishing.exercise2.myapp.customers.domain.CustomerType;
 import net.icdpublishing.exercise2.searchengine.domain.Record;
@@ -18,6 +20,9 @@ import net.icdpublishing.exercise2.searchengine.requests.SimpleSurnameAndPostcod
 public class CustomSearchEngineRetrievalServiceImpl implements CustomSearchEngineRetrievalService {
 	@Autowired
 	CustomerDaoService daoService;
+	
+	@Autowired
+	ChargingService chargingService;
 	
 	@Override
 	public Collection<Record> search(SimpleSurnameAndPostcodeQuery query) {
@@ -43,6 +48,9 @@ public class CustomSearchEngineRetrievalServiceImpl implements CustomSearchEngin
 			return isAllowedDisplayData(customerType, rec);
 		}).collect(Collectors.toList());
 		
+		if (persons != null && !persons.isEmpty()) {
+			chargingService.charge(email, persons.size());
+		}
 		return persons;
 	}
 	

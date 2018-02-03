@@ -35,4 +35,10 @@ public class HardcodedListOfCustomersImpl implements CustomerDao {
 		c.setCustomType(type);
 		return c;
 	}
+
+	@Override
+	public Map<String, Customer> getCustomersMap() {
+		return customers;
+	}
+	
 }

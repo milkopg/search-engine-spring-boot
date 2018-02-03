@@ -1,6 +1,6 @@
 package net.icdpublishing.exercise2.myapp.customers.dao;
 
-import org.springframework.stereotype.Repository;
+import java.util.Map;
 
 import net.icdpublishing.exercise2.myapp.customers.domain.Customer;
 
@@ -13,4 +13,6 @@ public interface CustomerDao {
 	 * @throws CustomerNotFoundException
 	 */
 	Customer findCustomerByEmailAddress(String email) throws CustomerNotFoundException;
+	
+	Map<String,Customer> getCustomersMap();
 }
