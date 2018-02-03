@@ -1,6 +1,10 @@
 package net.icdpublishing.exercise2.myapp.customers.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +35,23 @@ public class CustomSearchEngineRetrievalServiceImpl implements CustomSearchEngin
 		DataLoader loader = new DataLoader();
 		Collection<Record> records = loader.loadAllDatasets()
 				.stream().filter( rec -> (rec.getPerson().getSurname().startsWith(surname) && rec.getPerson().getAddress().getPostcode().startsWith(postCode)
-						|| ("".equals(surname) && "".equals(surname))))
+						|| ("".equals(surname) && "".equals(surname)))) //TODO to remove it
 				.collect(Collectors.toList());
-		return records;
+		return sortRecords(records);
+	}
+
+	private Collection<Record> sortRecords(Collection<Record> records) {
+		List<Record> sortedRecords = new ArrayList<>(records);
+		Collections.sort(sortedRecords, new Comparator<Record>() {
+
+			@Override
+			public int compare(Record rec1, Record rec2) {
+				return rec1.getPerson().getSurname().compareTo(rec2.getPerson().getSurname());
+			}
+		});
+		
+		 Collection<Record> sortedCollection = sortedRecords;
+		 return sortedCollection;
 	}
 
 	@Override
@@ -63,7 +81,7 @@ public class CustomSearchEngineRetrievalServiceImpl implements CustomSearchEngin
 		boolean allowed = false;
 		if (CustomerType.PREMIUM.equals(customerType)) {
 			allowed = true;
-		} else if (CustomerType.NON_PAYING.equals(customerType) && record.getSourceTypes().contains(SourceType.BT)){
+		} else if (CustomerType.NON_PAYING.equals(customerType) && record.getSourceTypes().contains(SourceType.BT) && record.getSourceTypes().size() == 1){
 			allowed = true;
 		}
 		return allowed;
