@@ -36,7 +36,7 @@ repositories {
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-freemarker')
-	//compile ('org.springframework.boot:spring-boot-starter-web')
+	compile ('org.springframework.boot:spring-boot-starter-web')
 	compile group: 'net.icdpublishing.exercise2', name: 'search-engine', version:'1.0'
     compile group: 'net.icdpublishing.exercise2', name: 'legacy-charging', version:'1.0'
     compile group: 'commons-lang', name: 'commons-lang', version:'2.6'
