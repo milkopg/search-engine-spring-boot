@@ -42,12 +42,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //			.and()
 //            .exceptionHandling().accessDeniedHandler(accessDeniedHandler);;
             
-            http.csrf().disable().authorizeRequests().antMatchers("/", "/api").permitAll()
-            .and().antMatcher("/search").authorizeRequests().anyRequest().hasRole("USER")
-			.and().formLogin().loginPage("/search")
-			.failureUrl("/search?error=1").loginProcessingUrl("/")
-			.permitAll().and().logout()
-			.logoutSuccessUrl("/");
+//            http.csrf().disable().authorizeRequests().antMatchers("/", "/api").permitAll()
+//            .and().antMatcher("/search").authorizeRequests().anyRequest().hasRole("USER")
+//			.and().formLogin().loginPage("/search")
+//			.failureUrl("/search?error=1").loginProcessingUrl("/")
+//			.permitAll().and().logout()
+//			.logoutSuccessUrl("/");
+		
+		 http
+	      .authorizeRequests()
+	        .antMatchers("/","/api/**").permitAll() // #4
+	        .antMatchers("/search").hasRole("USER") // #6
+	        .anyRequest().authenticated() // 7
+	        .and()
+	    .formLogin()  // #8
+	        .loginPage("/search") // #9
+	        .permitAll(); // #5
 	}
 	
 	@Autowired
