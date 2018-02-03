@@ -26,7 +26,7 @@ public class ChargingDaoImpl implements ChargingDao {
 			int credits = premiumCustomersMap.get(email);
 			credits -= numberOfCredits;
 			premiumCustomersMap.replace(email, credits);
-			throw new ChargingException("We don't charge for individual records which exclusively contain data sourced from \"BT\". ");
+		//	throw new ChargingException("We don't charge for individual records which exclusively contain data sourced from \"BT\". ");
 		}
 	}
 	

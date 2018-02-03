@@ -8,7 +8,7 @@ import net.icdpublishing.exercise2.myapp.charging.dao.ChargingDao;
 import net.icdpublishing.exercise2.myapp.charging.services.ChargingService;
 
 @Service
-public class ChargingDaoServiceImpl implements ChargingService {
+public class ChargingServiceImpl implements ChargingService {
 	@Autowired
 	private ChargingDao chargingDao;
 	

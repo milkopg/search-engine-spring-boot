@@ -19,7 +19,7 @@ import net.icdpublishing.exercise2.searchengine.requests.SimpleSurnameAndPostcod
 @Service
 public class CustomSearchEngineRetrievalServiceImpl implements CustomSearchEngineRetrievalService {
 	@Autowired
-	CustomerDaoService daoService;
+	CustomerService daoService;
 	
 	@Autowired
 	ChargingService chargingService;

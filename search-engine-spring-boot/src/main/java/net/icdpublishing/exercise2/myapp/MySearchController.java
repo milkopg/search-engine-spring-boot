@@ -19,7 +19,7 @@ import net.icdpublishing.exercise2.myapp.customers.domain.Customer;
 import net.icdpublishing.exercise2.myapp.customers.general.Constants;
 import net.icdpublishing.exercise2.myapp.customers.search.SearchForm;
 import net.icdpublishing.exercise2.myapp.customers.service.CustomSearchEngineRetrievalService;
-import net.icdpublishing.exercise2.myapp.customers.service.CustomerDaoService;
+import net.icdpublishing.exercise2.myapp.customers.service.CustomerService;
 import net.icdpublishing.exercise2.searchengine.domain.Record;
 
 @Controller
@@ -28,7 +28,7 @@ public class MySearchController {
 	CustomSearchEngineRetrievalService retrievalService;
 	
 	@Autowired
-	CustomerDaoService daoService;
+	CustomerService daoService;
 	
 	@GetMapping(Constants.SCREEN_HOME)
 	public String home(Model model) {
@@ -60,7 +60,7 @@ public class MySearchController {
 		return modelAndView;
 	}
 	
-	@GetMapping(value = Constants.SCREEN_SEARCH, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@GetMapping(value = Constants.SCREEN_API, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public @ResponseBody Collection<Record> search (@RequestParam(value="email", required=true) String email, 
 			@RequestParam(value="surname", required=true) String surname, 
 			@RequestParam(value="postcode", required=true) String postcode) {
