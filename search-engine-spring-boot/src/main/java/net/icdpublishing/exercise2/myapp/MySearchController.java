@@ -19,7 +19,7 @@ import net.icdpublishing.exercise2.myapp.customers.domain.Customer;
 import net.icdpublishing.exercise2.myapp.customers.general.Constants;
 import net.icdpublishing.exercise2.myapp.customers.search.SearchForm;
 import net.icdpublishing.exercise2.myapp.customers.service.CustomSearchEngineRetrievalService;
-import net.icdpublishing.exercise2.myapp.customers.service.CustomerDaoService;
+import net.icdpublishing.exercise2.myapp.customers.service.CustomerService;
 import net.icdpublishing.exercise2.searchengine.domain.Record;
 
 @Controller
@@ -28,7 +28,7 @@ public class MySearchController {
 	CustomSearchEngineRetrievalService retrievalService;
 	
 	@Autowired
-	CustomerDaoService daoService;
+	CustomerService daoService;
 	
 	@GetMapping(Constants.SCREEN_HOME)
 	public String home(Model model) {

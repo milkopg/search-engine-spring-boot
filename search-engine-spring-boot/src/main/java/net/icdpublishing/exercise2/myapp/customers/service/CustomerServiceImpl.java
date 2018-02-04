@@ -7,7 +7,7 @@ import net.icdpublishing.exercise2.myapp.customers.dao.CustomerDao;
 import net.icdpublishing.exercise2.myapp.customers.domain.Customer;
 
 @Service
-public class CustomerDaoServiceImpl implements CustomerDaoService {
+public class CustomerServiceImpl implements CustomerService {
 	
 	@Autowired
 	private CustomerDao customerDao;
