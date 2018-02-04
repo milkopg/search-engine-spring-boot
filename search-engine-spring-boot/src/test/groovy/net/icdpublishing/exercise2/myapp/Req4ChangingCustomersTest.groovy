@@ -23,10 +23,10 @@ class Req4ChangingCustomersTest extends Specification{
 	def "Charge paying customer" () {
 		when: "Charge paying customer"
 		def chargeTest = new ChargingServiceTest(chargingDao);
-		chargingService 
 		chargeTest.charge("john.doe@192.com", 4);_
 		then: "Catch an exception"
 		thrown(ChargingException)
+		true;
 	}
 	
 	def "Charge non paying customer" () {

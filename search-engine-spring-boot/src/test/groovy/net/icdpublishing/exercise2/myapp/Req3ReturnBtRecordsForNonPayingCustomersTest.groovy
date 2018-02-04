@@ -35,7 +35,6 @@ class Req3ReturnBtRecordsForNonPayingCustomersTest extends Specification{
 	private MockMvc mvc;
 	
 	def setup() {
-		//customerRetrievalService = new CustomSearchEngineRetrievalServiceImpl();
 		customerRetrievalService = Stub(CustomSearchEngineRetrievalService.class);
 		customerService = Stub(CustomerService.class)
 		
@@ -60,10 +59,10 @@ class Req3ReturnBtRecordsForNonPayingCustomersTest extends Specification{
 	
 	def "Test fetching non paying customer" () {
 		when: "Search for  non paying customer records"
-		Collection <Record> foundCustomers = customerRetrievalService.performSearch("Smith", "sw6 2bq", "harry.lang@192.com");
+		customerRetrievalService.performSearch("Smith", "sw6 2bq", "harry.lang@192.com") >> records
 		then: "Compare results"
-		//foundCustomers.size() == records.size()
-		true
+		def foundCustomers = customerRetrievalService.performSearch("Smith", "sw6 2bq", "harry.lang@192.com");
+		foundCustomers == records
 	}
 	
 //	@TestConfiguration
