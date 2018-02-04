@@ -53,6 +53,7 @@ dependencies {
 sourceSets {
 	main {
 		java.srcDir "src/main/java"
+		java.srcDir "src/main/groovy"
 	}
 	test {
 		java.srcDir "src/test/groovy"

@@ -12,17 +12,32 @@ import net.icdpublishing.exercise2.searchengine.domain.Address
 import net.icdpublishing.exercise2.searchengine.domain.Person
 import net.icdpublishing.exercise2.searchengine.domain.Record
 import net.icdpublishing.exercise2.searchengine.domain.SourceType
+import net.icdpublishing.exercise2.searchengine.services.SearchEngineRetrievalService
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
+import org.springframework.boot.test.context.TestConfiguration
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.ComponentScan
+import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+
 import spock.lang.Specification
 
-class Req3ReturnBtRecordsForNonPayingCustomers extends Specification{
+@WebMvcTest
+@ComponentScan(basePackages= "net.icdpublishing.exercise2.myapp")
+class Req3ReturnBtRecordsForNonPayingCustomersTest extends Specification{
+	//@Autowired
 	CustomSearchEngineRetrievalService customerRetrievalService;
-	ChargingDao charginDao;
+	CustomerService customerService;;
 	Collection<Record> records;
 	
+	@Autowired
+	private MockMvc mvc;
+	
 	def setup() {
-		customerRetrievalService = new CustomSearchEngineRetrievalServiceImpl();
-		
-		charginDao = Stub(ChargingDao)
+		//customerRetrievalService = new CustomSearchEngineRetrievalServiceImpl();
+		customerRetrievalService = Stub(CustomSearchEngineRetrievalService.class);
+		customerService = Stub(CustomerService.class)
 		
 		records = new LinkedList();
 		Person person = new Person();
@@ -45,9 +60,19 @@ class Req3ReturnBtRecordsForNonPayingCustomers extends Specification{
 	
 	def "Test fetching non paying customer" () {
 		when: "Search for  non paying customer records"
-		//Collection <Record> foundCustomers = customerRetrievalService.performSearch("Smith", "sw6 2bq", " harry.lang@192.com");
+		Collection <Record> foundCustomers = customerRetrievalService.performSearch("Smith", "sw6 2bq", "harry.lang@192.com");
 		then: "Compare results"
-		//foundCustomers == records
+		//foundCustomers.size() == records.size()
 		true
 	}
+	
+//	@TestConfiguration
+//	static class MockConfig {
+//	  def detachedMockFactory = new DetachedMockFactory();
+//  
+//	  @Bean
+//	  SearchEngineRetrievalService customerRetrievalService() {
+//		return detachedMockFactory.Stub(CustomSearchEngineRetrievalService)
+//	  }
+//	}
 }
