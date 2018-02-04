@@ -7,7 +7,7 @@ import net.icdpublishing.exercise2.myapp.customers.domain.Customer
 import net.icdpublishing.exercise2.myapp.customers.domain.CustomerType
 import spock.lang.*
 
-class HardcodedListOfCustomerImplTest extends spock.lang.Specification{
+class Req2HardcodedListOfCustomerImplTest extends spock.lang.Specification{
 	CustomerDao customerDao;
 	Customer createdCustomer;
 	
