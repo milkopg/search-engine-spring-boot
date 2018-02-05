@@ -1,40 +1,47 @@
 package net.icdpublishing.exercise2.myapp
 
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
-import org.springframework.context.annotation.ComponentScan
+import org.springframework.boot.test.context.SpringBootTest
 
 import net.icdpublishing.exercise2.myapp.charging.ChargingException
-import net.icdpublishing.exercise2.myapp.charging.dao.ChargingDao
 import net.icdpublishing.exercise2.myapp.charging.services.ChargingService
+import net.icdpublishing.exercise2.myapp.customers.dao.ChargingDaoImpl
+import net.icdpublishing.exercise2.myapp.customers.dao.ChargingDaoImplTest
+import net.icdpublishing.exercise2.myapp.customers.dao.CustomerDao
+import net.icdpublishing.exercise2.myapp.customers.dao.HardcodedListOfCustomersImpl
 import net.icdpublishing.exercise2.myapp.customers.service.ChargingServiceTest
 import spock.lang.Specification
 
-@WebMvcTest
+@SpringBootTest
 class Req4ChangingCustomersTest extends Specification{
-	
+	@Autowired
 	ChargingService chargingService;
-	ChargingDao chargingDao;
+	ChargingDaoImpl chargingDao;
+	CustomerDao customerDao;
+	ChargingDaoImplTest chargingDaoTest;
 	def setup() {
-		chargingService = Mock(ChargingService);
-		chargingDao = Mock (ChargingDao);
+		chargingService = Stub(ChargingService);
+		customerDao = new HardcodedListOfCustomersImpl();
+		chargingDao = new ChargingDaoImpl();
+		chargingDaoTest =  new ChargingDaoImplTest(chargingDao, customerDao);
+		chargingDao.initPurchaseCredits();
+		chargingDao.setCustomerDao(customerDao);
+		
 	}
 	
 	def "Charge paying customer" () {
 		when: "Charge paying customer"
-		def chargeTest = new ChargingServiceTest(chargingDao);
-		chargeTest.charge("john.doe@192.com", 4);_
+		
+		chargingDaoTest.chargeForSearch("john.doe@192.com", 4) 
 		then: "Catch an exception"
 		thrown(ChargingException)
-		true;
+		//true;
 	}
 	
 	def "Charge non paying customer" () {
 		when: "Charge paying customer"
-		def chargeTest = new ChargingServiceTest(chargingDao);
-		chargeTest.charge("john.doe@192.com", 4);_
+		chargingDaoTest.chargeForSearch("harry.lang@192.com", 4);_
 		then: "No Exception"
-		true;
+		!chargingDao.getPremiumCustomersMap().contains("harry.lang@192.com") 
 	}
-	
 }

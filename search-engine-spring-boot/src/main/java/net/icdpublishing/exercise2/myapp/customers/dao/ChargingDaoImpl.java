@@ -32,10 +32,20 @@ public class ChargingDaoImpl implements ChargingDao {
 	
 	@PostConstruct
 	private void initPurchaseCredits() {
-		for (Entry <String, Customer> entry :customerDao.getCustomersMap().entrySet()) {
+		if (customerDao != null)
+		for (Entry <String, Customer> entry : customerDao.getCustomersMap().entrySet()) {
 			if (CustomerType.PREMIUM.equals(entry.getValue().getCustomType())) {
 				premiumCustomersMap.put(entry.getKey(), 192);
 			}
 		}
+	}
+	
+	public  ConcurrentHashMap<String, Integer> getPremiumCustomersMap() {
+		return premiumCustomersMap;
+	}
+	
+	public void setCustomerDao(CustomerDao customerDao) {
+		this.customerDao = customerDao;
+		initPurchaseCredits();
 	}
 }
