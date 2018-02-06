@@ -1,6 +1,5 @@
 package net.icdpublishing.exercise2.myapp
 
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 
 import net.icdpublishing.exercise2.myapp.charging.ChargingException
@@ -9,7 +8,6 @@ import net.icdpublishing.exercise2.myapp.customers.dao.ChargingDaoImpl
 import net.icdpublishing.exercise2.myapp.customers.dao.ChargingDaoImplTest
 import net.icdpublishing.exercise2.myapp.customers.dao.CustomerDao
 import net.icdpublishing.exercise2.myapp.customers.dao.HardcodedListOfCustomersImpl
-import net.icdpublishing.exercise2.myapp.customers.service.ChargingServiceTest
 import spock.lang.Specification
 
 @SpringBootTest

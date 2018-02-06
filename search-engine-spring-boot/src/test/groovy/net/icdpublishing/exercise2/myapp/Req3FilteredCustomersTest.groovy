@@ -1,20 +1,12 @@
 package net.icdpublishing.exercise2.myapp
 
-import java.util.Collection
-import java.util.HashSet
-import java.util.LinkedList
-import java.util.Set
-
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.context.annotation.ComponentScan
-import org.springframework.test.web.servlet.MockMvc
 
 import net.icdpublishing.exercise2.myapp.customers.dao.CustomerDao
 import net.icdpublishing.exercise2.myapp.customers.dao.HardcodedListOfCustomersImpl
 import net.icdpublishing.exercise2.myapp.customers.domain.CustomerType
 import net.icdpublishing.exercise2.myapp.customers.service.CustomSearchEngineRetrievalService
-import net.icdpublishing.exercise2.myapp.customers.service.CustomerService
 import net.icdpublishing.exercise2.searchengine.domain.Address
 import net.icdpublishing.exercise2.searchengine.domain.Person
 import net.icdpublishing.exercise2.searchengine.domain.Record
@@ -22,11 +14,8 @@ import net.icdpublishing.exercise2.searchengine.domain.SourceType
 import net.icdpublishing.exercise2.searchengine.requests.SimpleSurnameAndPostcodeQuery
 import spock.lang.Specification
 
-@WebMvcTest
-@ComponentScan(basePackages= "net.icdpublishing.exercise2.myapp")
-class Req3ReturnBtRecordsForNonPayingCustomersTest extends Specification{
+class Req3FilteredCustomersTest extends Specification{
 	CustomSearchEngineRetrievalService customerRetrievalService;
-	CustomerService customerService;;
 	CustomerDao customerDao;
 	Collection<Record> recordsNonPaying;
 	Collection<Record> recordsPaying;

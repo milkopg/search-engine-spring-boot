@@ -1,9 +1,5 @@
 package net.icdpublishing.exercise2.myapp
 
-import java.util.Collection
-import java.util.HashSet
-import java.util.Set
-
 import net.icdpublishing.exercise2.myapp.customers.dao.CustomerDao
 import net.icdpublishing.exercise2.myapp.customers.dao.CustomerNotFoundException
 import net.icdpublishing.exercise2.myapp.customers.dao.HardcodedListOfCustomersImpl
@@ -17,13 +13,8 @@ import net.icdpublishing.exercise2.searchengine.domain.SourceType
 import net.icdpublishing.exercise2.searchengine.requests.SimpleSurnameAndPostcodeQuery
 import spock.lang.Specification
 
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.mock.mockito.MockBean
-import org.springframework.test.context.ContextConfiguration
-
 class Req5AuthenticationTest extends Specification{
 	CustomSearchEngineRetrievalService searchEngineRetrievalService;
-	@MockBean
 	CustomerDao customerDao;
 	Collection<Record> records;
 	SimpleSurnameAndPostcodeQuery query;
@@ -92,7 +83,7 @@ class Req5AuthenticationTest extends Specification{
 		records.add(r4);
 	}
 		
-	def "Search with registered customer" () {
+	def "Authenticated customer, got results" () {
 		def email = "harry.lang@192.com".toString();
 		
 		searchEngineRetrievalService.performSearch(query.getSurname(), query.getPostcode(), email) >> records;
@@ -107,7 +98,7 @@ class Req5AuthenticationTest extends Specification{
 		def email = "no.name192.com".toString();
 		when: "Search for existing customer"
 		def foundCustomer = customerDao.findCustomerByEmailAddress(email);
-		then: "Exception"
+		then: "Not authenticated, throw an Exception"
 		thrown(CustomerNotFoundException)
 	}
 }
