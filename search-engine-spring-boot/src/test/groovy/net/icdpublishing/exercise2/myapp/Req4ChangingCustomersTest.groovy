@@ -35,7 +35,7 @@ class Req4ChangingCustomersTest extends Specification{
 		chargingDaoTest.chargeForSearch("john.doe@192.com", 4) 
 		then: "Catch an exception"
 		thrown(ChargingException)
-		//true;
+		chargingDao.getPremiumCustomersMap().get("john.doe@192.com") == 188
 	}
 	
 	def "Charge non paying customer" () {
