@@ -14,25 +14,31 @@ import spock.lang.Specification
 
 @SpringBootTest
 class Req4ChangingCustomersTest extends Specification{
-	@Autowired
 	ChargingService chargingService;
 	ChargingDaoImpl chargingDao;
 	CustomerDao customerDao;
 	ChargingDaoImplTest chargingDaoTest;
 	def setup() {
-		chargingService = Stub(ChargingService);
+		chargingService = Mock(ChargingService);
 		customerDao = new HardcodedListOfCustomersImpl();
 		chargingDao = new ChargingDaoImpl();
 		chargingDaoTest =  new ChargingDaoImplTest(chargingDao, customerDao);
 		chargingDao.initPurchaseCredits();
 		chargingDao.setCustomerDao(customerDao);
-		
 	}
 	
-	def "Charge paying customer" () {
+	def "Catching exception for charging new Customer" () {
+		chargingService.charge("john.doe@192.com", 4) >> {throw new ChargingException("")}
 		when: "Charge paying customer"
 		
 		chargingDaoTest.chargeForSearch("john.doe@192.com", 4) 
+		then: "Catch an exception"
+		thrown(ChargingException)
+	}
+	
+	def "Charging for search" () {
+		when: "Charge paying customer"
+		chargingDaoTest.chargeForSearch("john.doe@192.com", 4)
 		then: "Catch an exception"
 		thrown(ChargingException)
 		chargingDao.getPremiumCustomersMap().get("john.doe@192.com") == 188

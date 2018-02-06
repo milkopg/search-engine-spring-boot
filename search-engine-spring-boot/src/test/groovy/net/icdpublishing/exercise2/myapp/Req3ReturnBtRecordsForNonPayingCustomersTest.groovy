@@ -26,7 +26,6 @@ import spock.lang.Specification
 @WebMvcTest
 @ComponentScan(basePackages= "net.icdpublishing.exercise2.myapp")
 class Req3ReturnBtRecordsForNonPayingCustomersTest extends Specification{
-	//@Autowired
 	CustomSearchEngineRetrievalService customerRetrievalService;
 	CustomerService customerService;;
 	Collection<Record> records;

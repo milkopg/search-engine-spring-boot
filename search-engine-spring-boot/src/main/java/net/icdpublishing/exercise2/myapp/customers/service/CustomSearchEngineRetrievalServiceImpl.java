@@ -33,8 +33,7 @@ public class CustomSearchEngineRetrievalServiceImpl implements CustomSearchEngin
 		String surname = query.getSurname();
 		DataLoader loader = new DataLoader();
 		Collection<Record> records = loader.loadAllDatasets()
-				.stream().filter( rec -> (rec.getPerson().getSurname().equals(surname) && rec.getPerson().getAddress().getPostcode().equals(postCode)
-						/*|| ("".equals(surname) && "".equals(surname))*/)) //TODO to remove it
+				.stream().filter( rec -> (rec.getPerson().getSurname().equals(surname) && rec.getPerson().getAddress().getPostcode().equals(postCode)))
 				.collect(Collectors.toList());
 		return sortRecords(records);
 	}
@@ -55,8 +54,8 @@ public class CustomSearchEngineRetrievalServiceImpl implements CustomSearchEngin
 
 	@Override
 	public Collection<Record> performSearch(String surname, String postcode, String email) {
-		SimpleSurnameAndPostcodeQuery query = new SimpleSurnameAndPostcodeQuery(surname, postcode);
 		Customer customer = customerService.findCustomerByEmailAddress(email);
+		SimpleSurnameAndPostcodeQuery query = new SimpleSurnameAndPostcodeQuery(surname, postcode);
 		CustomerType customerType = customer.getCustomType();
 		SearchRequest request = new SearchRequest(query, customer);
 		
