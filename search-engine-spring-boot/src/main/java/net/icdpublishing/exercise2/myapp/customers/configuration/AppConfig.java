@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @SuppressWarnings("deprecation")
 
-@ComponentScan("net.icdpublishing.exercise2")
+@ComponentScan(basePackages= {"net.icdpublishing.exercise2", "net.icdpublishing.exercise2.myapp"})
 @Configuration 
 public class AppConfig extends WebMvcConfigurerAdapter {
 	@Bean
