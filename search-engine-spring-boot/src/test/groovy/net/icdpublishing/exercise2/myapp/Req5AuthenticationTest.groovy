@@ -5,6 +5,7 @@ import java.util.HashSet
 import java.util.Set
 
 import net.icdpublishing.exercise2.myapp.customers.dao.CustomerDao
+import net.icdpublishing.exercise2.myapp.customers.dao.CustomerNotFoundException
 import net.icdpublishing.exercise2.myapp.customers.dao.HardcodedListOfCustomersImpl
 import net.icdpublishing.exercise2.myapp.customers.domain.CustomerType
 import net.icdpublishing.exercise2.myapp.customers.service.CustomSearchEngineRetrievalService
@@ -100,5 +101,13 @@ class Req5AuthenticationTest extends Specification{
 		def foundCustomer = customerDao.findCustomerByEmailAddress(email);
 		then:
 		foundRecords.size() == records.size() && foundCustomer.getEmailAddress().equals(email) && foundCustomer.getCustomType() == CustomerType.NON_PAYING;
+	}
+	
+	def "Search with unknown customer" () {
+		def email = "no.name192.com".toString();
+		when: "Search for existing customer"
+		def foundCustomer = customerDao.findCustomerByEmailAddress(email);
+		then: "Exception"
+		thrown(CustomerNotFoundException)
 	}
 }
