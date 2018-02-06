@@ -10,7 +10,6 @@ import net.icdpublishing.exercise2.myapp.customers.dao.CustomerDao
 import net.icdpublishing.exercise2.myapp.customers.dao.HardcodedListOfCustomersImpl
 import spock.lang.Specification
 
-@SpringBootTest
 class Req4ChangingCustomersTest extends Specification{
 	ChargingService chargingService;
 	ChargingDaoImpl chargingDao;

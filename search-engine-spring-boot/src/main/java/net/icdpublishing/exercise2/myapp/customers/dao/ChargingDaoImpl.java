@@ -40,10 +40,12 @@ public class ChargingDaoImpl implements ChargingDao {
 		}
 	}
 	
+	//TODO for remove
 	public  ConcurrentHashMap<String, Integer> getPremiumCustomersMap() {
 		return premiumCustomersMap;
 	}
 	
+	//TODO For remove
 	public void setCustomerDao(CustomerDao customerDao) {
 		this.customerDao = customerDao;
 		initPurchaseCredits();
