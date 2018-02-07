@@ -1,9 +1,9 @@
 package net.icdpublishing.exercise2.myapp
 
 import net.icdpublishing.exercise2.myapp.customers.dao.CustomerDao
-import net.icdpublishing.exercise2.myapp.customers.dao.CustomerNotFoundException
 import net.icdpublishing.exercise2.myapp.customers.dao.HardcodedListOfCustomersImpl
 import net.icdpublishing.exercise2.myapp.customers.domain.CustomerType
+import net.icdpublishing.exercise2.myapp.customers.exception.CustomerNotFoundException
 import net.icdpublishing.exercise2.myapp.customers.service.CustomSearchEngineRetrievalService
 import net.icdpublishing.exercise2.myapp.customers.service.CustomSearchEngineRetrievalServiceImpl
 import net.icdpublishing.exercise2.searchengine.domain.Address
