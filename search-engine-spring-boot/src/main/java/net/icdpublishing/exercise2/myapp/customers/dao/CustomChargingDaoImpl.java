@@ -20,8 +20,12 @@ public class CustomChargingDaoImpl implements CustomChargingDao {
 		if (premiumCustomersMap.containsKey(email)) {
 			int credits = premiumCustomersMap.get(email);
 			credits -= numberOfCredits;
+			if (credits < 0) {
+				credits = 0;
+				throw new ChargingException("Cannot display data. You don't have enought credits for display data");
+			}
 			premiumCustomersMap.replace(email, credits);
-			throw new ChargingException("We don't charge for individual records which exclusively contain data sourced from \"BT\". ");
+			throw new ChargingException("We don't charge for individual records which exclusively contain data sourced from \"BT\". " + credits);
 		}
 	}
 	
