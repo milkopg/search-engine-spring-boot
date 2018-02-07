@@ -25,7 +25,7 @@ public class CustomChargingDaoImpl implements CustomChargingDao {
 				throw new ChargingException("Cannot display data. You don't have enought credits for display data");
 			}
 			premiumCustomersMap.replace(email, credits);
-			throw new ChargingException("We don't charge for individual records which exclusively contain data sourced from \"BT\". " + credits);
+			throw new ChargingException("We don't charge for individual records which exclusively contain data sourced from \"BT\". ");
 		}
 	}
 	
