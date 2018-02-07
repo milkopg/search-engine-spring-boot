@@ -16,5 +16,4 @@ public class CustomerServiceImpl implements CustomerService {
 	public Customer findCustomerByEmailAddress(String email) {
 		return customerDao.findCustomerByEmailAddress(email);
 	}
-
 }

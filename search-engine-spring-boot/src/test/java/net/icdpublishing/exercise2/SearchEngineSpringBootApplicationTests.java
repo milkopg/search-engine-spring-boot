@@ -1,20 +1,14 @@
 package net.icdpublishing.exercise2;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
 
 import net.icdpublishing.exercise2.myapp.MySearchController;
 import net.icdpublishing.exercise2.myapp.customers.service.CustomSearchEngineRetrievalService;
-import net.icdpublishing.exercise2.myapp.customers.service.CustomSearchEngineRetrievalServiceImpl;
 import net.icdpublishing.exercise2.myapp.customers.service.CustomerService;
 
 @RunWith(SpringRunner.class)

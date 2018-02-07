@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import net.icdpublishing.exercise2.myapp.customers.domain.Customer;
 import net.icdpublishing.exercise2.myapp.customers.domain.CustomerType;
+import net.icdpublishing.exercise2.myapp.customers.exception.CustomerNotFoundException;
 
 @Repository
 public class HardcodedListOfCustomersImpl implements CustomerDao {

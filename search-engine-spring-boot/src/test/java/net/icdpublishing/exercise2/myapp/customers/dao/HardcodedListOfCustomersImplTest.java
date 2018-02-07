@@ -1,12 +1,13 @@
 package net.icdpublishing.exercise2.myapp.customers.dao;
 
-import static org.junit.Assert.*;
-
-import net.icdpublishing.exercise2.myapp.customers.domain.Customer;
-import net.icdpublishing.exercise2.myapp.customers.domain.CustomerType;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import net.icdpublishing.exercise2.myapp.customers.domain.Customer;
+import net.icdpublishing.exercise2.myapp.customers.domain.CustomerType;
+import net.icdpublishing.exercise2.myapp.customers.exception.CustomerNotFoundException;
 
 public class HardcodedListOfCustomersImplTest {
 

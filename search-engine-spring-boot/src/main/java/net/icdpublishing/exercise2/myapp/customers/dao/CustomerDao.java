@@ -3,6 +3,7 @@ package net.icdpublishing.exercise2.myapp.customers.dao;
 import java.util.Map;
 
 import net.icdpublishing.exercise2.myapp.customers.domain.Customer;
+import net.icdpublishing.exercise2.myapp.customers.exception.CustomerNotFoundException;
 
 public interface CustomerDao {
 
@@ -14,6 +15,9 @@ public interface CustomerDao {
 	 */
 	Customer findCustomerByEmailAddress(String email) throws CustomerNotFoundException;
 	
-	//TODO FOR REMOVE
+	/**
+	 * Get map of all given customers with key email
+	 * @return Map <String, Customer> where k-> email
+	 */
 	Map<String,Customer> getCustomersMap();
 }

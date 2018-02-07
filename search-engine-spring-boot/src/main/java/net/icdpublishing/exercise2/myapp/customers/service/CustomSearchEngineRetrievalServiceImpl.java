@@ -10,10 +10,10 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import net.icdpublishing.exercise2.myapp.SearchRequest;
 import net.icdpublishing.exercise2.myapp.charging.services.ChargingService;
 import net.icdpublishing.exercise2.myapp.customers.domain.Customer;
 import net.icdpublishing.exercise2.myapp.customers.domain.CustomerType;
+import net.icdpublishing.exercise2.myapp.customers.search.SearchRequest;
 import net.icdpublishing.exercise2.searchengine.domain.Record;
 import net.icdpublishing.exercise2.searchengine.domain.SourceType;
 import net.icdpublishing.exercise2.searchengine.loader.DataLoader;
@@ -38,6 +38,11 @@ public class CustomSearchEngineRetrievalServiceImpl implements CustomSearchEngin
 		return sortRecords(records);
 	}
 
+	/**
+	 * Method sort collection of records by surname asc by creating Comparator
+	 * @param records of Collection<Record> which needs to be sorted
+	 * @return sorted Collection<Record>
+	 */
 	private Collection<Record> sortRecords(Collection<Record> records) {
 		List<Record> sortedRecords = new ArrayList<>(records);
 		Collections.sort(sortedRecords, new Comparator<Record>() {
@@ -70,11 +75,23 @@ public class CustomSearchEngineRetrievalServiceImpl implements CustomSearchEngin
 		return persons;
 	}
 	
+	/**
+	 * Helper method transfers combines SimpleSurnameAndPostcodeQuery(postcode and surname) with customer email.
+	 * If fetches data from getResults()
+	 * @param request SimpleSurnameAndPostcodeQuery - postcode , surname, email
+	 * @return Collection <Record>
+	 */
 	private Collection<Record> handleRequest(SearchRequest request) {
 		Collection<Record> resultSet = getResults(request.getQuery());
 		return resultSet;
 	}
 	
+	/**
+	 * Checks if data could be displayed to non paying customer where source type is only BT or for premium customers
+	 * @param customerType TypeofCustomer {@link CustomerType}
+	 * @param record where is taken sourceType
+	 * @return true if customerType is premium or customer is non paying and source type is only BT, otherwise false
+	 */
 	private boolean isAllowedDisplayData(CustomerType customerType, Record record) {
 		boolean allowed = false;
 		if (CustomerType.PREMIUM.equals(customerType)) {
@@ -85,6 +102,11 @@ public class CustomSearchEngineRetrievalServiceImpl implements CustomSearchEngin
 		return allowed;
 	}
 	
+	/**
+	 * redirects to getResults(SimpleSurnameAndPostcodeQuery query)
+	 * @param query
+	 * @return Collection of found requds
+	 */
 	private Collection<Record> getResults(SimpleSurnameAndPostcodeQuery query) {
 		return search(query);
 	}

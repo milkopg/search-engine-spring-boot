@@ -23,7 +23,7 @@
 	               <th><@spring.message "person.address.town"/></th>
 	               <th><@spring.message "person.sourcetypes"/></th>
 	            </tr>
-	            <#list persons as record>
+	            <#list records as record>
 	            <tr>
 	             <td>${record.person.forename?if_exists}</td>
 	               <td>${record.person.middlename?if_exists}</td>

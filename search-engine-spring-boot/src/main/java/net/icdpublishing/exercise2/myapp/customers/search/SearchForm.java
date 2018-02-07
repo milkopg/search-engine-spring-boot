@@ -1,5 +1,10 @@
 package net.icdpublishing.exercise2.myapp.customers.search;
 
+/**
+ * Helper class to put all search fields - email, surname, postcode to one class
+ * @author Milko Galev
+ *
+ */
 public class SearchForm {
 	
 	private String email;
@@ -24,6 +29,4 @@ public class SearchForm {
 	public void setPostcode(String postcode) {
 		this.postcode = postcode;
 	}
-	
-	
 }

@@ -8,6 +8,11 @@ import net.icdpublishing.exercise2.myapp.customers.dao.HardcodedListOfCustomersI
 import net.icdpublishing.exercise2.myapp.customers.domain.Customer;
 import net.icdpublishing.exercise2.myapp.customers.domain.CustomerType;
 
+/**
+ * Custom DataLoader requires to load payment data for premium customers 
+ * @author Milko Galev
+ *
+ */
 public class PaymentDataLoader {
 	
 	private CustomerDao customerDao;
@@ -16,6 +21,11 @@ public class PaymentDataLoader {
 		this.customerDao = new HardcodedListOfCustomersImpl();
 	}
 	
+	/**
+	 * It simulate adding payments credits to premium {@code CustomerType.PREMIUM} customers. Collection is ConcurrentHashMap
+	 * to avoid any concurrent issue while credits are taken for searching 
+	 * @return ConcurrentHashMap of initialized credits
+	 */
 	public ConcurrentHashMap<String, Integer> loadAllPaymentMap() {
 		ConcurrentHashMap<String, Integer> premiumCustomersMap = new ConcurrentHashMap<>();
 		for (Entry <String, Customer> entry : customerDao.getCustomersMap().entrySet()) {
