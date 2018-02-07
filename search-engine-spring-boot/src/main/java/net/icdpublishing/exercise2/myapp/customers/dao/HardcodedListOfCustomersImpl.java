@@ -3,9 +3,13 @@ package net.icdpublishing.exercise2.myapp.customers.dao;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.stereotype.Repository;
+
 import net.icdpublishing.exercise2.myapp.customers.domain.Customer;
 import net.icdpublishing.exercise2.myapp.customers.domain.CustomerType;
+import net.icdpublishing.exercise2.myapp.customers.exception.CustomerNotFoundException;
 
+@Repository
 public class HardcodedListOfCustomersImpl implements CustomerDao {
 
 	private static Map<String,Customer> customers = new HashMap<String, Customer>();
@@ -32,4 +36,10 @@ public class HardcodedListOfCustomersImpl implements CustomerDao {
 		c.setCustomType(type);
 		return c;
 	}
+
+	@Override
+	public Map<String, Customer> getCustomersMap() {
+		return customers;
+	}
+	
 }

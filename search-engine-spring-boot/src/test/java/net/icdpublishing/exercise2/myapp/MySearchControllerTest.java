@@ -1,7 +1,5 @@
 package net.icdpublishing.exercise2.myapp;
 
-import static org.junit.Assert.*;
-
 import org.junit.Before;
 import org.junit.Test;
 
