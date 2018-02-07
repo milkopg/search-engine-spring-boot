@@ -120,6 +120,7 @@ class Req3FilteredCustomersTest extends Specification{
 				break;
 			}
 		}
+		//make sure that records are not paying with sourceType BT only
 		mockRecords == recordsNonPaying && btRecordsOnly && foundCustomer.customerType.equals(CustomerType.NON_PAYING);
 	}
 	

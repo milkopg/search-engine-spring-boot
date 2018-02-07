@@ -1,50 +1,56 @@
 package net.icdpublishing.exercise2.myapp
 
-import org.springframework.boot.test.context.SpringBootTest
+import java.util.concurrent.ConcurrentHashMap
 
 import net.icdpublishing.exercise2.myapp.charging.ChargingException
 import net.icdpublishing.exercise2.myapp.charging.services.ChargingService
-import net.icdpublishing.exercise2.myapp.customers.dao.ChargingDaoImpl
-import net.icdpublishing.exercise2.myapp.customers.dao.ChargingDaoImplTest
-import net.icdpublishing.exercise2.myapp.customers.dao.CustomerDao
-import net.icdpublishing.exercise2.myapp.customers.dao.HardcodedListOfCustomersImpl
+import net.icdpublishing.exercise2.myapp.customers.dao.CustomChargingDao
+import net.icdpublishing.exercise2.myapp.customers.dao.CustomChargingDaoImpl
+import net.icdpublishing.exercise2.myapp.customers.loader.PaymentDataLoader
 import spock.lang.Specification
 
 class Req4ChangingCustomersTest extends Specification{
 	ChargingService chargingService;
-	ChargingDaoImpl chargingDao;
-	CustomerDao customerDao;
-	ChargingDaoImplTest chargingDaoTest;
+	CustomChargingDao customChargingDao;
+	ConcurrentHashMap<String, Integer> paymentMap;
 	def setup() {
 		chargingService = Mock(ChargingService);
-		customerDao = new HardcodedListOfCustomersImpl();
-		chargingDao = new ChargingDaoImpl();
-		chargingDaoTest =  new ChargingDaoImplTest(chargingDao, customerDao);
-		chargingDao.initPurchaseCredits();
-		chargingDao.setCustomerDao(customerDao);
+		customChargingDao = new CustomChargingDaoImpl();
+		paymentMap = new PaymentDataLoader().loadAllPaymentMap();
 	}
 	
 	def "Catching exception for charging new Customer" () {
-		chargingService.charge("john.doe@192.com", 4) >> {throw new ChargingException("")}
 		when: "Charge paying customer"
-		
-		chargingDaoTest.chargeForSearch("john.doe@192.com", 4) 
+		customChargingDao.chargeForSearch("john.doe@192.com", 4) 
 		then: "Catch an exception"
-		thrown(ChargingException)
+		thrown(ChargingException) 
 	}
 	
 	def "Charging for search" () {
+		def email = "john.doe@192.com".toString();
+		chargingService.charge(email, 4) >> { paymentMap.put(email, paymentMap.get(email)-4)}
 		when: "Charge paying customer"
-		chargingDaoTest.chargeForSearch("john.doe@192.com", 4)
+		chargingService.charge(email, 4)
+		customChargingDao.chargeForSearch(email, 4) 
 		then: "Catch an exception"
-		thrown(ChargingException)
-		chargingDao.getPremiumCustomersMap().get("john.doe@192.com") == 188
+		def ex = thrown(ChargingException)
+		customChargingDao.getCustomerBalance(email) == paymentMap.get(email);
+		
 	}
 	
-	def "Charge non paying customer" () {
+	def "No exception non paying customer" () {
+		def email = "harry.lang@192.com".toString();
 		when: "Charge paying customer"
-		chargingDaoTest.chargeForSearch("harry.lang@192.com", 4);_
+		customChargingDao.chargeForSearch(email, 4) 
 		then: "No Exception"
-		!chargingDao.getPremiumCustomersMap().contains("harry.lang@192.com") 
+		notThrown(ChargingException)
+	}
+	
+	def "No charging for non paying customer" () {
+		def email = "harry.lang@192.com".toString();
+		when: "Charge paying customer"
+		customChargingDao.chargeForSearch(email, 4)
+		then: "No Exception"
+		customChargingDao.getCustomerBalance(email) == paymentMap.get(email);
 	}
 }
