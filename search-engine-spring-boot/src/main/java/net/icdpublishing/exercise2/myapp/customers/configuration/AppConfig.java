@@ -9,14 +9,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @SuppressWarnings("deprecation")
 
-@ComponentScan(basePackages= {"net.icdpublishing.exercise2", "net.icdpublishing.exercise2.myapp"})
+@ComponentScan(basePackages= {"net.icdpublishing.exercise2"})
 @Configuration 
 public class AppConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	public MessageSource messageSource() {
 	    ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
 	    messageSource.setBasename("classpath:messages");
-	    messageSource.setCacheSeconds(10); //reload messages every 10 seconds
 	    return messageSource;
 	}
 }
