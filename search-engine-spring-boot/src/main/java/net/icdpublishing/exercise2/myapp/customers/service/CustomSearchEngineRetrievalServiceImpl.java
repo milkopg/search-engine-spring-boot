@@ -49,7 +49,7 @@ public class CustomSearchEngineRetrievalServiceImpl implements CustomSearchEngin
 
 			@Override
 			public int compare(Record rec1, Record rec2) {
-				return rec1.getPerson().getSurname().compareTo(rec2.getPerson().getSurname());
+				return rec1.getPerson().getForename().compareTo(rec2.getPerson().getForename());
 			}
 		});
 		
@@ -69,7 +69,7 @@ public class CustomSearchEngineRetrievalServiceImpl implements CustomSearchEngin
 			return isAllowedDisplayData(customerType, rec);
 		}).collect(Collectors.toList());
 		
-		if (persons != null && !persons.isEmpty()) {
+		if (persons != null && !persons.isEmpty() && customer.getCustomType() == CustomerType.PREMIUM) {
 			chargingService.charge(email, persons.size());
 		}
 		return persons;
